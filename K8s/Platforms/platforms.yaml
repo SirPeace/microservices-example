@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: platforms
+  name: webapi--deployment
+  labels:
+    app: webapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapi
+  template:
+    metadata:
+      namespace: platforms
+      name: webapi--pod
+      labels:
+        app: webapi
+    spec:
+      containers:
+        - name: platforms-webapi
+          image: sirpeace/les-microservices.platform-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          env:
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "8000"
+          resources:
+            requests:
+              cpu: "0.25"
+              memory: "128Mi"
+            limits:
+              cpu: "0.5"
+              memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: platforms
+  name: webapi--service
+  labels:
+    app: webapi
+spec:
+  type: NodePort
+  selector:
+    app: webapi
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
