@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: platforms
+  namespace: commands
   name: webapi--deployment
   labels:
     app: webapi
@@ -12,22 +12,20 @@ spec:
       app: webapi
   template:
     metadata:
-      namespace: platforms
+      namespace: commands
       name: webapi--pod
       labels:
         app: webapi
     spec:
       containers:
-        - name: platforms-webapi
-          image: sirpeace/les-microservices.platform-service
+        - name: commands-webapi
+          image: sirpeace/les-microservices.command-service
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
           env:
             - name: ASPNETCORE_HTTP_PORTS
               value: "8000"
-            - name: CommandServiceEndpoint
-              value: http://webapi--service.commands.svc.cluster.local:8000
           resources:
             requests:
               cpu: "0.25"
@@ -39,12 +37,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: platforms
+  namespace: commands
   name: webapi--service
   labels:
     app: webapi
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: webapi
   ports:
