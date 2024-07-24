@@ -8,7 +8,7 @@ public class PlatformDtoMapper : IRegister
 {
     public void Register(TypeAdapterConfig config)
     {
-        config.NewConfig<Platform, PlatformReadDTO>();
-        config.NewConfig<PlatformCreateDTO, Platform>();
+        config.NewConfig<Platform, PlatformReadDto>();
+        config.NewConfig<PlatformCreateDto, Platform>();
     }
 }

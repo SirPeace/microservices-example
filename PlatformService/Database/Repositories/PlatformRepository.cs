@@ -9,7 +9,7 @@ public class PlatformRepository(AppDbContext dbContext)
 
     public Task<List<Platform>> GetAll() => dbContext.Platforms.ToListAsync();
 
-    public Task<Platform?> FindById(int id) =>
+    public Task<Platform?> FindById(long id) =>
         dbContext.Platforms.FirstOrDefaultAsync(p => p.Id == id);
 
     public void Add(params Platform[] platforms)

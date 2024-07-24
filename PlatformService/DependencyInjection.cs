@@ -1,5 +1,6 @@
 using System.Reflection;
 using Mapster;
+using PlatformService.Communication.Http;
 using PlatformService.Database;
 using PlatformService.Database.Repositories;
 
@@ -36,6 +37,8 @@ public static class DependencyInjection
 
     private static void AddServices(IServiceCollection services)
     {
-        services.AddSingleton<PlatformRepository>();
+        services.AddScoped<PlatformRepository>();
+
+        services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
     }
 }
